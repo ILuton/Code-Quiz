@@ -7,6 +7,7 @@ const highScoresEl = document.querySelector(".highScores");
 const quizIntroEl = document.querySelector(".quizIntro");
 const fullScoreEl = document.querySelector(".fullScore");
 const highScoreSubmit = document.getElementById("highSubmit")
+const nameEl = document.getElementById("fname");
 let answersDelete = document.getElementsByTagName("h3");
 let questionIndex = 0;
 let answers = document.querySelector(".answers")
@@ -27,6 +28,7 @@ function startQuiz () {
     button.remove();
     quizIntroEl.remove();
     showQuestion();
+    scoreStore();
 
     highScoresEl.style.visibility = "hidden";
 }
@@ -40,6 +42,11 @@ highScoresEl.addEventListener("click", function() {
     button.remove();
     quizIntroEl.remove();
     fullScoreEl.remove();
+
+    let highscoreName = document.createElement("h3");
+    mainEl.appendChild(highscoreName);
+    highscoreName.textContent =  localStorage.getItem("name")
+    
 
 });
 
@@ -127,6 +134,18 @@ const questions = [
         ],
         answer: "pop()"
     },
+
+    // question set 5
+    {
+        question: "which way is the correct way to call a function?",
+        options: [
+            {text: "function.call();"},
+            {text: "call.function;"},
+            {text: "function;", },
+            {text: "function();", }
+        ],
+        answer: "function();"
+    }
         
 ]
 
@@ -152,6 +171,7 @@ function pickQuestion (question) {
     });
 }
 
+//function to see if clicked target has the correctanswer class added to it then call next question
 function isCorrect(e) {
     let answerPicked = e.target
 
@@ -172,9 +192,10 @@ function isCorrect(e) {
 
 }
 
+//function to loop through array of questions and pull next out of index
 function nextQuestion () {
     
-    if (questionIndex < 3) {
+    if (questionIndex < 4) {
     questionIndex = questionIndex + 1;
     showQuestion(questions[questionIndex])
     } else {
@@ -185,6 +206,7 @@ function nextQuestion () {
     }
 }
 
+//function to remove added h3's 
 function clearPage () {
 
     for (let index = 0; index <= 3; index++) {
@@ -217,11 +239,25 @@ function wrongAnswer() {
     setTimeout(() => { timerEL.style.backgroundColor = "rgb(172, 172, 172)";}, 1000);
 }
 
+//function to save name and score to local storage
 function scoreStore () {
 
+    highScoreSubmit.addEventListener("click", function () {
+
+
+        scoreEl = score;
+
+        let storeALL = nameEl.value + "             " + scoreEl;
+
+        let firstName = "name";
+
+        window.localStorage.setItem(firstName, storeALL);
+
+    })
     
 }
 
+//function to show high score text box to insert name into 
 function scoreSubmit () {
     highScoreSubmit.id = "#highSubmitVisible";
 }
