@@ -42,10 +42,7 @@ highScoresEl.addEventListener("click", function() {
     button.remove();
     quizIntroEl.remove();
     fullScoreEl.remove();
-
-    let highscoreName = document.createElement("h3");
-    mainEl.appendChild(highscoreName);
-    highscoreName.textContent =  localStorage.getItem("name")
+    getScore();
     
 
 });
@@ -84,7 +81,7 @@ function setTimer() {
 }
 
 
-//array of questions 
+// questions 
 
 const questions = [
     {
@@ -247,14 +244,36 @@ function scoreStore () {
 
         scoreEl = score;
 
-        let storeALL = nameEl.value + "             " + scoreEl;
+        let firstName = fname.value;
 
-        let firstName = "name";
+        window.localStorage.setItem(firstName, scoreEl);
 
-        window.localStorage.setItem(firstName, storeALL);
 
     })
     
+}
+
+//function to get score from local storage 
+
+function getScore() {
+
+    for (let i = 0; i < localStorage.length; i++) {
+
+        let value = localStorage.key(i);
+
+
+        let highscoreName = document.createElement("h3");
+
+        let scoreValue = localStorage.getItem(value);
+        let getName = localStorage.getItem("name");
+
+        let nameScore = `${getName}    ${scoreValue}`;
+
+    
+        highscoreName.textContent = nameScore;
+
+        mainEl.appendChild(highscoreName);
+    }
 }
 
 //function to show high score text box to insert name into 
